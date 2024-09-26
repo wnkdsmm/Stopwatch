@@ -84,21 +84,29 @@ class MainActivity : AppCompatActivity() {
         stopwatch.base = SystemClock.elapsedRealtime() - offset
     }
 
-    override fun onStop() {
-        super.onStop()
-        //код, выполняемый при остановке активности
+//    override fun onStop() {
+//        super.onStop()
+//        //код, выполняемый при остановке активности
+//        if (running) {
+//            saveOffset()
+//            stopwatch.stop()
+//        }
+//    }
+
+//    1. Добавьте остановку хронометра (без обнуления значения) при остановке активити.
+//    2. Измените приложение, чтобы остановка хронометра выполнялась в методе onPause
+
+    override fun onPause() {
+        super.onPause()
+        // Остановить хронометр, если он работает
         if (running) {
             saveOffset()
             stopwatch.stop()
         }
     }
-    override fun onStart() {
-        super.onStart()
-        //код, выполняемый при запуске активности
-    }
 
-    override fun onRestart() {
-        super.onRestart()
+    override fun onResume() {
+        super.onResume()
         //код, выполняемый при перезапуске активности
         if (running) {
             setBaseTime()
