@@ -27,11 +27,39 @@ class MainActivity : AppCompatActivity() {
         // получение ссылки на секундомер
         stopwatch = findViewById<Chronometer>(R.id.stopwatch)
 
+        // кнопка запускает секундомер, если он не работал
+        val startButton = findViewById<Button>(R.id.start_button)
+        startButton.setOnClickListener{
+            if (!running) {
+                setBaseTime()
+                stopwatch.start()
+                running=true
+            }
+        }
+        // кнопка останавливает секундомер, если он работал
+        val pauseButton = findViewById<Button>(R.id.pause_button)
+        pauseButton.setOnClickListener {
+            // сохранить время на секундомере и оставить его
+            if (running) {
+                saveOffset()
+                stopwatch.stop()
+                running=false
+            }
+        }
+        // кнопка обнуляет offset и базовое время
+        val resetButton = findViewById<Button>(R.id.reset_button)
+        resetButton.setOnClickListener {
+            offset = 0
+            setBaseTime() // обнулить показания секундомера
+        }
+    }
 
+    private fun saveOffset() {
+        offset = SystemClock.elapsedRealtime() - stopwatch.base
     }
 
     private fun setBaseTime() {
-        TODO("Not yet implemented")
+        stopwatch.base = SystemClock.elapsedRealtime() - offset
     }
 
 }

@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:text="@string/pause" />
     <Button
-        android:id="@+id/rese_button"
+        android:id="@+id/reset_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/reset" />
