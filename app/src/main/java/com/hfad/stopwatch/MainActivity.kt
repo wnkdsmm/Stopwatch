@@ -10,16 +10,28 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import com.hfad.stopwatch.databinding.ActivityMainBinding
+import android.os.SystemClock
+import android.widget.Button
+import android.widget.Chronometer
 
 class MainActivity : AppCompatActivity() {
+    // управление секундомером
+    lateinit var stopwatch: Chronometer // Хронометр
+    var running = false // хронометр работает?
+    var offset: Long = 0 // базовое смещение
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_main)
+        // получение ссылки на секундомер
+        stopwatch = findViewById<Chronometer>(R.id.stopwatch)
 
+
+    }
+
+    private fun setBaseTime() {
+        TODO("Not yet implemented")
     }
 
 }
