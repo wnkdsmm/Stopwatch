@@ -20,12 +20,26 @@ class MainActivity : AppCompatActivity() {
     var running = false // хронометр работает?
     var offset: Long = 0 // базовое смещение
 
+    // добавление строк для ключей, используемых с Bundle
+    val OFFSET_KEY = "offset"
+    val RUNNING_KEY = "running"
+    val BASE_KEY = "base"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         // получение ссылки на секундомер
         stopwatch = findViewById<Chronometer>(R.id.stopwatch)
+
+        // восстановление предыдущего состояния
+        if (savedInstanceState != null) {
+            offset = savedInstanceState.getLong(OFFSET_KEY)
+            running = savedInstanceState.getBoolean(RUNNING_KEY)
+            if (running) {
+                stopwatch.base = savedInstanceState.getLong(BASE_KEY)
+                stopwatch.start()
+            } else setBaseTime()
+        }
 
         // кнопка запускает секундомер, если он не работал
         val startButton = findViewById<Button>(R.id.start_button)
@@ -52,6 +66,14 @@ class MainActivity : AppCompatActivity() {
             offset = 0
             setBaseTime() // обнулить показания секундомера
         }
+    }
+
+    override fun onSaveInstanceState(savedInstanceState: Bundle) {
+        super.onSaveInstanceState(savedInstanceState)
+        savedInstanceState.putLong(OFFSET_KEY, offset)
+        savedInstanceState.putBoolean(RUNNING_KEY, running)
+        savedInstanceState.putLong(BASE_KEY, stopwatch.base)
+
     }
 
     private fun saveOffset() {
